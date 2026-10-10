@@ -20,6 +20,6 @@ Use the `transcribe_audio` tool from the **cription** MCP server. It runs Apple 
 The cription MCP server is not connected. Run `cription_status` if available; otherwise tell the user to set it up:
 
 - Claude Code: `/plugin marketplace add msandroid/cription-plugins` then `/plugin install cription@cription`
-- Codex / other clients: `codex mcp add cription -- uvx --from "git+https://github.com/msandroid/cription-plugins#subdirectory=plugins/cription/server" cription-mcp`
+- Codex / other clients: `codex mcp add cription -- uvx --from git+https://github.com/msandroid/cription-mcp cription-mcp`
 
 Requirements: macOS 26+, Xcode Command Line Tools (`xcode-select --install`) for the one-time build.
