@@ -1,0 +1,14 @@
+{
+  "name": "cription",
+  "owner": { "name": "Cription", "url": "https://github.com/msandroid" },
+  "description": "On-device transcription and Cription notes for AI agents.",
+  "plugins": [
+    {
+      "name": "cription",
+      "source": "./plugins/cription",
+      "description": "Transcribe audio/video on-device (Apple SpeechAnalyzer), turn transcripts into minutes, and search your Cription notes. Nothing leaves your Mac.",
+      "category": "productivity",
+      "tags": ["transcription", "speech-to-text", "meetings", "on-device", "privacy", "macos"]
+    }
+  ]
+}
