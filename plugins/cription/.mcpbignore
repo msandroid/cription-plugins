@@ -1,7 +1,0 @@
-server/README.md
-server/pyproject.toml
-server/**/__pycache__
-.codex-plugin
-.claude-plugin
-.mcp.json
-skills
