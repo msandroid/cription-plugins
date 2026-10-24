@@ -1,0 +1,27 @@
+{
+  "name": "cription",
+  "owner": {
+    "name": "Cription",
+    "url": "https://github.com/msandroid"
+  },
+  "plugins": [
+    {
+      "name": "cription",
+      "source": "./plugins/cription",
+      "description": "Transcribe audio/video on-device (Apple SpeechAnalyzer), turn transcripts into minutes, and search your Cription notes. Audio is processed locally; tool results are returned to your AI client.",
+      "category": "productivity",
+      "tags": [
+        "transcription",
+        "speech-to-text",
+        "meetings",
+        "on-device",
+        "privacy",
+        "macos"
+      ],
+      "version": "0.4.0"
+    }
+  ],
+  "metadata": {
+    "description": "Cription on-device transcription, notes and summaries for Cursor."
+  }
+}

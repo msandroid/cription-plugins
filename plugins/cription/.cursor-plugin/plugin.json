@@ -1,0 +1,23 @@
+{
+  "name": "cription",
+  "version": "0.4.0",
+  "description": "Transcribe local audio/video, summarize transcripts, and search Cription notes. Recognition runs on this Mac; tool results are shared with Cursor.",
+  "author": {
+    "name": "Cription"
+  },
+  "homepage": "https://github.com/msandroid/cription-plugins",
+  "repository": "https://github.com/msandroid/cription-plugins",
+  "license": "MIT",
+  "keywords": [
+    "transcription",
+    "speech-to-text",
+    "macos",
+    "mcp"
+  ],
+  "skills": [
+    "./skills/transcribe",
+    "./skills/summarize-transcript",
+    "./skills/cription-notes"
+  ],
+  "mcpServers": "./mcp.json"
+}
