@@ -19,5 +19,6 @@
     "./skills/summarize-transcript",
     "./skills/cription-notes"
   ],
-  "mcpServers": "./mcp.json"
+  "mcpServers": "./mcp.json",
+  "logo": "https://raw.githubusercontent.com/msandroid/cription-plugins/main/plugins/cription/assets/logo.png"
 }
