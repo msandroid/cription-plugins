@@ -1,13 +1,13 @@
-# Cription for Claude, Codex & other AI agents
+# Cription plugins for Claude, Codex and Antigravity
 
 On-device transcription and your Cription notes, available to AI coding agents and assistants through **plugins** and **skills**. The MCP server lives in [msandroid/cription-mcp](https://github.com/msandroid/cription-mcp).
 
 - 🎙️ **Transcribe** local audio and video files with Apple's on-device SpeechAnalyzer (the engine Cription uses for its best-scoring languages, e.g. Japanese).
 - 📝 **Summarize** transcripts into minutes, interview findings, lecture notes or sales-call summaries with Cription's templates.
 - 🔎 **Search and read** the notes you recorded with the Cription Mac app (read-only).
-- 🔒 **Private**: everything runs on your Mac. No audio, transcript or note is sent anywhere by this server.
+- 🔒 **On-device recognition**: audio is processed on your Mac. Tool results are returned to your AI client.
 
-[日本語は下にあります](#日本語)
+**Release: [v0.3.0](https://github.com/msandroid/cription-plugins/releases/tag/v0.3.0)** · MCP server pinned to **v0.2.0**. [日本語の詳しい導入手順](https://github.com/msandroid/cription-mcp/blob/v0.2.0/docs/INSTALL.ja.md) · [日本語概要](#日本語)
 
 ## Requirements
 
@@ -27,17 +27,21 @@ On-device transcription and your Cription notes, available to AI coding agents a
 
 ### Codex
 
-Skills (plugin):
+Install the skills from this release:
 
 ```bash
-codex plugin marketplace add msandroid/cription-plugins
+codex plugin marketplace add msandroid/cription-plugins --ref v0.3.0
+codex plugin add cription@cription
 ```
 
-Then open `/plugins` in Codex and install **cription**. Add the MCP server:
+Add the MCP server separately:
 
 ```bash
-codex mcp add cription -- uvx --from git+https://github.com/msandroid/cription-mcp cription-mcp
+uv tool install --from git+https://github.com/msandroid/cription-mcp@v0.2.0 cription-mcp
+uv tool update-shell
 ```
+
+Reopen your terminal, then run `cription-mcp-setup install codex`. Restart Codex or start a new chat. If the setup command is not on PATH yet, use `"$(uv tool dir --bin)/cription-mcp-setup"`.
 
 ### Claude Desktop
 
@@ -50,13 +54,40 @@ Or add to `~/Library/Application Support/Claude/claude_desktop_config.json` and 
   "mcpServers": {
     "cription": {
       "command": "uvx",
-      "args": ["--from", "git+https://github.com/msandroid/cription-mcp", "cription-mcp"]
+      "args": ["--from", "git+https://github.com/msandroid/cription-mcp@v0.2.0", "cription-mcp"]
     }
   }
 }
 ```
 
 Use the absolute path to `uvx` (`which uvx`) if Claude cannot find it.
+
+### Antigravity
+
+For a standalone MCP connection:
+
+```bash
+uv tool install --from git+https://github.com/msandroid/cription-mcp@v0.2.0 cription-mcp
+uv tool update-shell
+```
+
+Reopen your terminal and run `cription-mcp-setup install antigravity`. Restart Antigravity, then check **Customizations → Installed → MCP Servers → cription → 8 tools enabled**. Older IDE versions can use `install antigravity-legacy`.
+
+To use the plugin with shared summary skills instead, download this release:
+
+```bash
+git clone --branch v0.3.0 --depth 1 https://github.com/msandroid/cription-plugins.git
+```
+
+In Antigravity, run `/plugin install /absolute/path/to/cription-plugins/plugins/cription`, replacing the path with your clone's absolute path. See [Google's plugin installation guide](https://www.antigravity.google/docs/plugins?tab=cli).
+
+Use **one** MCP registration in each client. If the plugin cannot find `uvx` in the GUI environment, use the standalone setup command, which configures absolute executable paths, and avoid also enabling the plugin's MCP connection.
+
+### ChatGPT
+
+ChatGPT uses the local server through OpenAI's private **Secure MCP Tunnel**. Follow the [Cription MCP setup guide](https://github.com/msandroid/cription-mcp#chatgpt-private-secure-mcp-tunnel). It requires a tunnel associated with your ChatGPT workspace, a runtime key with Tunnels Read + Use, and a running official `tunnel-client`. The v0.2.0 server includes setup commands and `read_transcript` for paging long transcripts without local file access. Each user creates their own Tunnel and runtime key; the GitHub release does not give access to a shared hosted server.
+
+The Claude and Antigravity plugin configurations pin MCP **v0.2.0**. These files do not install a ChatGPT public-directory plugin. For full ChatGPT setup, see the [Japanese guide](https://github.com/msandroid/cription-mcp/blob/v0.2.0/docs/INSTALL.ja.md#4-chatgpt).
 
 ### Cursor and other MCP clients
 
@@ -67,7 +98,7 @@ Use the absolute path to `uvx` (`which uvx`) if Claude cannot find it.
   "mcpServers": {
     "cription": {
       "command": "uvx",
-      "args": ["--from", "git+https://github.com/msandroid/cription-mcp", "cription-mcp"]
+      "args": ["--from", "git+https://github.com/msandroid/cription-mcp@v0.2.0", "cription-mcp"]
     }
   }
 }
@@ -79,8 +110,9 @@ Without `uv`: see [cription-mcp](https://github.com/msandroid/cription-mcp#witho
 
 | Tool | What it does |
 |---|---|
-| `transcribe_audio` | Audio/video file → transcript with `[mm:ss]` timestamps. Options: `locale` (e.g. `ja-JP`), `terms` (names/jargon to spell right), `timestamps`, `save_to`. Long transcripts are saved to a file. |
+| `transcribe_audio` | Audio/video file → transcript with `[mm:ss]` timestamps. Options: `locale` (e.g. `ja-JP`), `terms` (names/jargon to spell right), `timestamps`, `save_to`. Long transcripts are saved to a file and can be paged with `read_transcript`. |
 | `speech_languages` | Locales the on-device engine supports and has installed. |
+| `read_transcript` (MCP v0.2.0) | Read long generated transcripts in pages, including from ChatGPT. |
 | `list_notes` | Your Cription notes, newest first (`limit`, `folder`, `since`). |
 | `search_notes` | Full-text search over titles, summaries, transcripts and memos. |
 | `get_note` | One note: transcript with speakers, summary, to-dos, memos, bookmarks. |
@@ -120,7 +152,7 @@ Cription の**オンデバイス文字起こし**と**ノート**を、Claude Co
 - **文字起こし**：手元の音声・動画ファイルを Apple SpeechAnalyzer でオンデバイスで文字起こしします（日本語で Cription が最も精度の高いエンジン）。
 - **要約**：Cription アプリと同じテンプレート（一般・会議・インタビュー・講義・商談）で議事録にします。
 - **ノート検索**：Cription の Mac アプリで録音したノートを読み取り専用で検索・参照します。
-- **プライバシー**：すべて Mac の中で処理し、音声・文字起こし・ノートを外部に送りません。
+- **プライバシー**：音声認識は Mac 上で処理します。返された文字起こし・ノート本文は、接続先の AI サービスに渡ります。
 
 必要なもの：macOS 26 以降（文字起こし）、Xcode Command Line Tools（初回に小さな Swift ヘルパーをビルドします）、`uv`。MCP サーバー本体は [cription-mcp](https://github.com/msandroid/cription-mcp) にあります。
 
@@ -130,6 +162,12 @@ Cription の**オンデバイス文字起こし**と**ノート**を、Claude Co
 /plugin marketplace add msandroid/cription-plugins
 /plugin install cription@cription
 ```
+
+## Update and remove
+
+For Claude Code, refresh the marketplace and update the plugin from `/plugin`. For Codex, refresh/re-add the marketplace at the desired release ref, then install that plugin version with `codex plugin add cription@cription`. For an Antigravity local install, download the new tagged source and reinstall its plugin directory. Restart the client afterward.
+
+Standalone server update/removal, config paths and troubleshooting are documented in the [installation guide](https://github.com/msandroid/cription-mcp/blob/v0.2.0/docs/INSTALL.ja.md#更新と削除). Removing a plugin or server does not delete your Cription recordings.
 
 ## License
 

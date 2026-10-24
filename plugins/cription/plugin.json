@@ -1,0 +1,5 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "cription",
+  "description": "Transcribe local audio/video with Apple SpeechAnalyzer, summarize transcripts, and search Cription notes. Tool results are shared with your AI client."
+}

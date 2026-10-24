@@ -1,8 +1,8 @@
 {
   "name": "cription",
   "displayName": "Cription",
-  "version": "0.2.0",
-  "description": "Transcribe audio/video on-device (Apple SpeechAnalyzer), turn transcripts into minutes, and search your Cription notes. Nothing leaves your Mac.",
+  "version": "0.3.0",
+  "description": "Transcribe audio/video on-device (Apple SpeechAnalyzer), turn transcripts into minutes, and search your Cription notes. Audio is processed locally; tool results are returned to your AI client.",
   "author": { "name": "Cription", "url": "https://github.com/msandroid" },
   "homepage": "https://github.com/msandroid/cription-plugins",
   "repository": "https://github.com/msandroid/cription-plugins",
