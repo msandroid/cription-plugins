@@ -9,6 +9,12 @@ On-device transcription and your Cription notes, available to AI coding agents a
 
 **Release: [v0.4.0](https://github.com/msandroid/cription-plugins/releases/tag/v0.4.0)** · MCP server pinned to **v0.3.1**. [日本語の詳しい導入手順](https://github.com/msandroid/cription-mcp/blob/v0.3.1/docs/INSTALL.ja.md) · [日本語概要](#日本語)
 
+## Notion and Manus
+
+Notion page export and authenticated HTTPS MCP for Manus / Notion Custom Agents are available in [Cription MCP v0.4.0](https://github.com/msandroid/cription-mcp/releases/tag/v0.4.0). Install that server release separately and follow the [Japanese connection guide](https://github.com/msandroid/cription-mcp/blob/v0.4.0/docs/NOTION-MANUS.ja.md). The existing v0.4.0 coding-agent plugin keeps its v0.3.1 MCP pin.
+
+Notion export was verified by creating and reading back a synthetic page. The shared HTTP transport passed all eight tools and real transcription; public HTTPS passed Bearer authentication and `speech_languages`. Notion Custom Agent testing is blocked by the workspace's Business entitlement. Manus app testing awaits login/terms consent. These are not Marketplace listings for either service.
+
 ## Requirements
 
 - macOS 26 or later (for transcription; notes work on older macOS)
