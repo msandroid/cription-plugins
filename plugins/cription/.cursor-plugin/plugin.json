@@ -1,6 +1,6 @@
 {
   "name": "cription",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Transcribe local audio/video, summarize transcripts, and search Cription notes. Recognition runs on this Mac; tool results are shared with Cursor.",
   "author": {
     "name": "Cription"

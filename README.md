@@ -7,13 +7,23 @@ On-device transcription and your Cription notes, available to AI coding agents a
 - 🔎 **Search and read** the notes you recorded with the Cription Mac app (read-only).
 - 🔒 **On-device recognition**: audio is processed on your Mac. Tool results are returned to your AI client.
 
-**Release: [v0.4.0](https://github.com/msandroid/cription-plugins/releases/tag/v0.4.0)** · MCP server pinned to **v0.3.1**. [日本語の詳しい導入手順](https://github.com/msandroid/cription-mcp/blob/v0.3.1/docs/INSTALL.ja.md) · [日本語概要](#日本語)
+**Release: [v0.5.0](https://github.com/msandroid/cription-plugins/releases/tag/v0.5.0)** · MCP server pinned to **v0.5.0**. [日本語の詳しい導入手順](https://github.com/msandroid/cription-mcp/blob/v0.5.0/docs/INSTALL.ja.md) · [日本語概要](#日本語)
 
 ## Notion and Manus
 
-Notion page export and authenticated HTTPS MCP for Manus / Notion Custom Agents are available in [Cription MCP v0.4.0](https://github.com/msandroid/cription-mcp/releases/tag/v0.4.0). Install that server release separately and follow the [Japanese connection guide](https://github.com/msandroid/cription-mcp/blob/v0.4.0/docs/NOTION-MANUS.ja.md). The existing v0.4.0 coding-agent plugin keeps its v0.3.1 MCP pin.
+Notion page export and authenticated HTTPS MCP for Manus / Notion Custom Agents are available in [Cription MCP v0.5.0](https://github.com/msandroid/cription-mcp/releases/tag/v0.5.0). Install that server release separately and follow the [Japanese connection guide](https://github.com/msandroid/cription-mcp/blob/v0.5.0/docs/NOTION-MANUS.ja.md). This plugin release also pins MCP v0.5.0.
 
 Notion export was verified by creating and reading back a synthetic page. The shared HTTP transport passed all eight tools and real transcription; public HTTPS passed Bearer authentication and `speech_languages`. Notion Custom Agent testing is blocked by the workspace's Business entitlement. Manus app testing awaits login/terms consent. These are not Marketplace listings for either service.
+
+## Gemini CLI, Grok and Gemini API
+
+Gemini CLI can install this repository as a native Extension (MCP + `GEMINI.md` context):
+
+```bash
+gemini extensions install https://github.com/msandroid/cription-plugins --ref v0.5.0
+```
+
+Requires `uvx` on PATH and macOS 26+ for transcription. Choose the Extension or standalone `cription-mcp-setup install gemini` to avoid duplicate tools. Grok and Gemini API use the separate authenticated HTTPS MCP and `cription-cloud` CLI in [MCP v0.5.0](https://github.com/msandroid/cription-mcp/releases/tag/v0.5.0). See the [Japanese guide](https://github.com/msandroid/cription-mcp/blob/v0.5.0/docs/GEMINI-GROK.ja.md) for setup and account-side verification limits. These are GitHub distributions, not official Marketplace listings.
 
 ## Requirements
 
@@ -36,14 +46,14 @@ Notion export was verified by creating and reading back a synthetic page. The sh
 Install the skills from this release:
 
 ```bash
-codex plugin marketplace add msandroid/cription-plugins --ref v0.4.0
+codex plugin marketplace add msandroid/cription-plugins --ref v0.5.0
 codex plugin add cription@cription
 ```
 
 Add the MCP server separately:
 
 ```bash
-uv tool install --from git+https://github.com/msandroid/cription-mcp@v0.3.1 cription-mcp
+uv tool install --from git+https://github.com/msandroid/cription-mcp@v0.5.0 cription-mcp
 uv tool update-shell
 ```
 
@@ -60,7 +70,7 @@ Or add to `~/Library/Application Support/Claude/claude_desktop_config.json` and 
   "mcpServers": {
     "cription": {
       "command": "uvx",
-      "args": ["--from", "git+https://github.com/msandroid/cription-mcp@v0.3.1", "cription-mcp"]
+      "args": ["--from", "git+https://github.com/msandroid/cription-mcp@v0.5.0", "cription-mcp"]
     }
   }
 }
@@ -73,7 +83,7 @@ Use the absolute path to `uvx` (`which uvx`) if Claude cannot find it.
 For a standalone MCP connection:
 
 ```bash
-uv tool install --from git+https://github.com/msandroid/cription-mcp@v0.3.1 cription-mcp
+uv tool install --from git+https://github.com/msandroid/cription-mcp@v0.5.0 cription-mcp
 uv tool update-shell
 ```
 
@@ -82,7 +92,7 @@ Reopen your terminal and run `cription-mcp-setup install antigravity`. Restart A
 To use the plugin with shared summary skills instead, download this release:
 
 ```bash
-git clone --branch v0.4.0 --depth 1 https://github.com/msandroid/cription-plugins.git
+git clone --branch v0.5.0 --depth 1 https://github.com/msandroid/cription-plugins.git
 ```
 
 In Antigravity, run `/plugin install /absolute/path/to/cription-plugins/plugins/cription`, replacing the path with your clone's absolute path. See [Google's plugin installation guide](https://www.antigravity.google/docs/plugins?tab=cli).
@@ -91,14 +101,14 @@ Use **one** MCP registration in each client. If the plugin cannot find `uvx` in 
 
 ### ChatGPT
 
-ChatGPT uses the local server through OpenAI's private **Secure MCP Tunnel**. Follow the [Cription MCP setup guide](https://github.com/msandroid/cription-mcp#chatgpt-private-secure-mcp-tunnel). It requires a tunnel associated with your ChatGPT workspace, a runtime key with Tunnels Read + Use, and a running official `tunnel-client`. The v0.3.1 server includes setup commands and `read_transcript` for paging long transcripts without local file access. Each user creates their own Tunnel and runtime key; the GitHub release does not give access to a shared hosted server.
+ChatGPT uses the local server through OpenAI's private **Secure MCP Tunnel**. Follow the [Cription MCP setup guide](https://github.com/msandroid/cription-mcp#chatgpt-private-secure-mcp-tunnel). It requires a tunnel associated with your ChatGPT workspace, a runtime key with Tunnels Read + Use, and a running official `tunnel-client`. The v0.5.0 server includes setup commands and `read_transcript` for paging long transcripts without local file access. Each user creates their own Tunnel and runtime key; the GitHub release does not give access to a shared hosted server.
 
-The Claude and Antigravity plugin configurations pin MCP **v0.3.1**. These files do not install a ChatGPT public-directory plugin. For full ChatGPT setup, see the [Japanese guide](https://github.com/msandroid/cription-mcp/blob/v0.3.1/docs/INSTALL.ja.md#4-chatgpt).
+The Claude and Antigravity plugin configurations pin MCP **v0.5.0**. These files do not install a ChatGPT public-directory plugin. For full ChatGPT setup, see the [Japanese guide](https://github.com/msandroid/cription-mcp/blob/v0.5.0/docs/INSTALL.ja.md#4-chatgpt).
 
 ### Cursor (native plugin: MCP + three skills)
 
 ```bash
-git clone --branch v0.4.0 --depth 1 https://github.com/msandroid/cription-plugins.git
+git clone --branch v0.5.0 --depth 1 https://github.com/msandroid/cription-plugins.git
 cd cription-plugins
 python3 scripts/install_cursor.py
 ```
@@ -107,7 +117,7 @@ Install `uv` first (`brew install uv`) if needed. The installer copies the nativ
 
 Run the same script with `--replace` to update; it backs up your previous plugin outside the auto-loaded local folder. Remove `~/.cursor/plugins/local/cription` and reload Cursor to uninstall.
 
-For **MCP only**, install [Cription MCP v0.3.1](https://github.com/msandroid/cription-mcp/releases/tag/v0.3.1), then run `cription-mcp-setup install cursor`. This preserves other entries in `~/.cursor/mcp.json` and creates a backup. The native plugin already includes MCP: use one method to avoid duplicate tools. If switching from standalone MCP, remove only `mcpServers.cription` from the global/project MCP JSON before installing the plugin.
+For **MCP only**, install [Cription MCP v0.5.0](https://github.com/msandroid/cription-mcp/releases/tag/v0.5.0), then run `cription-mcp-setup install cursor`. This preserves other entries in `~/.cursor/mcp.json` and creates a backup. The native plugin already includes MCP: use one method to avoid duplicate tools. If switching from standalone MCP, remove only `mcpServers.cription` from the global/project MCP JSON before installing the plugin.
 
 Ask Cursor Agent: “Call Cription speech_languages.” For audio, pass an absolute path on this Mac. Recognition is local; returned transcripts and note text go to the model selected in Cursor. Remote Cloud Agents cannot access this Mac's local server.
 
@@ -174,7 +184,7 @@ Cription の**オンデバイス文字起こし**と**ノート**を、Claude Co
 
 For Claude Code, refresh the marketplace and update the plugin from `/plugin`. For Codex, refresh/re-add the marketplace at the desired release ref, then install that plugin version with `codex plugin add cription@cription`. For an Antigravity local install, download the new tagged source and reinstall its plugin directory. Restart the client afterward.
 
-Standalone server update/removal, config paths and troubleshooting are documented in the [installation guide](https://github.com/msandroid/cription-mcp/blob/v0.3.1/docs/INSTALL.ja.md#更新と削除). Removing a plugin or server does not delete your Cription recordings.
+Standalone server update/removal, config paths and troubleshooting are documented in the [installation guide](https://github.com/msandroid/cription-mcp/blob/v0.5.0/docs/INSTALL.ja.md#更新と削除). Removing a plugin or server does not delete your Cription recordings.
 
 ## License
 

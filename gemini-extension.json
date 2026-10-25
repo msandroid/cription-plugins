@@ -1,0 +1,10 @@
+{
+  "name": "cription",
+  "version": "0.5.0",
+  "mcpServers": {
+    "cription": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/msandroid/cription-mcp@v0.5.0", "cription-mcp"]
+    }
+  }
+}
